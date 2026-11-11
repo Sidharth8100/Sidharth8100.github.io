@@ -245,7 +245,7 @@ fs.mkdirSync(out, { recursive: true });
   assert.deepEqual(errors, []);
   assert.deepEqual(badResponses, []);
   console.log(
-    "PASS: combined search/filters, 10 dialogs, architecture steps, repository notebook, event trace, BFS reachable/unreachable, reset, keyboard grid, palette, reduced motion, disclosures, local assets, 7 responsive widths, legacy routing, no-JS fallback, zero page errors.",
+    "PASS: combined search/filters, 10 dialogs, architecture steps, event trace, BFS reachable/unreachable, reset, keyboard grid, palette, reduced motion, disclosures, local assets, 7 responsive widths, legacy routing, no-JS fallback, zero page errors.",
   );
   await browser.close();
 })().catch((error) => {

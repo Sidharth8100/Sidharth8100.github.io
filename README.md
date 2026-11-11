@@ -26,7 +26,7 @@ The current working branch is `redesign/engineering-observatory`. This update is
 - WARDEN architecture inspector and illustrative event trace.
 - Nine gallery projects plus featured WARDEN. Combined text/category search, a resettable empty state, and detailed native dialogs.
 - Interactive architecture steps for Panel, EncryptiView, CIFAR-10, and this portfolio.
-- A repository notebook distinguishes the Bitcoin research sketch and GitHub profile from implemented projects.
+- Previous/next case-study browsing and arrow-key architecture controls. Unimplemented ideas are omitted.
 - Breadth-first-search playground: toggle walls, find a shortest path, reset even during playback. Arrow keys move between cells.
 - Expandable experience and toolkit sections.
 - Quick navigation using **Ctrl/Cmd + K**; type to search, Tab/Arrow Down to focus, Enter to open, Esc to close.
@@ -59,3 +59,7 @@ node tests/interactions.cjs
 ```
 
 Start the preview server first. Tests use installed Google Chrome at `/usr/bin/google-chrome`; set `CHROME_PATH` for a different installation. `PORTFOLIO_PLAYWRIGHT` and `PORTFOLIO_AXE` can point to existing package installations instead of installing anything here. Screenshots and reports go into ignored `test-results/`.
+
+## Targeted resumes
+
+See `resumes/README.md` for four standalone Overleaf sources, compiled one-page A4 PDFs, extracted text and validation results.

@@ -1,0 +1,42 @@
+[
+  {
+    "file": "ai-ml.pdf",
+    "pages": 1,
+    "width_pt": 595.28,
+    "height_pt": 841.89,
+    "last_text_baseline_pt": 762.50573,
+    "bytes": 14092,
+    "missing_fields": [],
+    "extracted_words": 477
+  },
+  {
+    "file": "data.pdf",
+    "pages": 1,
+    "width_pt": 595.28,
+    "height_pt": 841.89,
+    "last_text_baseline_pt": 762.50573,
+    "bytes": 14311,
+    "missing_fields": [],
+    "extracted_words": 486
+  },
+  {
+    "file": "general.pdf",
+    "pages": 1,
+    "width_pt": 595.28,
+    "height_pt": 841.89,
+    "last_text_baseline_pt": 762.50573,
+    "bytes": 14539,
+    "missing_fields": [],
+    "extracted_words": 491
+  },
+  {
+    "file": "sde.pdf",
+    "pages": 1,
+    "width_pt": 595.28,
+    "height_pt": 841.89,
+    "last_text_baseline_pt": 762.50573,
+    "bytes": 14204,
+    "missing_fields": [],
+    "extracted_words": 491
+  }
+]
