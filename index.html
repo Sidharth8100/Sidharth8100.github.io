@@ -249,10 +249,14 @@
             </div>
           </div>
         </article>
+        <div class="collection-heading">
+          <p class="eyebrow">THE PROJECT COLLECTION</p>
+          <p>Recent builds first. Foundations kept in view.</p>
+        </div>
         <div class="project-toolbar">
           <div class="filter-group" role="group" aria-label="Filter projects">
             <button class="filter active" data-filter="all" aria-pressed="true">
-              All work <span>07</span></button
+              All work <span>09</span></button
             ><button class="filter" data-filter="systems" aria-pressed="false">
               Systems & data</button
             ><button class="filter" data-filter="ai" aria-pressed="false">
@@ -261,18 +265,45 @@
               Applications
             </button>
           </div>
-          <span id="project-count" aria-live="polite">07 PROJECTS</span>
+          <span id="project-count" aria-live="polite">09 PROJECTS</span>
         </div>
+        <label class="project-search" for="project-search">
+          <span>FIND A PROJECT <span aria-hidden="true">⌕</span></span>
+          <input id="project-search" type="search" placeholder="Try OpenCLIP, Flutter, C++…" autocomplete="off" />
+        </label>
         <div class="project-grid" id="project-grid"></div>
+        <div class="project-empty" id="project-empty" hidden>
+          <p>No projects match this combination.</p>
+          <button id="clear-project-search" class="text-link">Reset the collection ↗</button>
+        </div>
         <noscript
           ><p>
             Explore projects on
             <a href="https://github.com/Sidharth8100">GitHub</a>, including
             ComicStudiesLabApp, Object_detection_PRML, EncryptiView,
-            Decision_Tree_Classifier, IC-MAJOR-PROJECT, and Jarvis. The
+            Decision_Tree_Classifier, IC-MAJOR-PROJECT, Jarvis, CodSoft, and this portfolio. The
             downloadable resume contains full project details.
           </p></noscript
         >
+        <div class="repository-notebook">
+          <div class="notebook-intro">
+            <p class="eyebrow">FROM THE NOTEBOOK</p>
+            <h3>Ideas have a place, too.</h3>
+            <p>Early directions and the profile behind the projects.</p>
+          </div>
+          <div class="notebook-entries">
+            <details>
+              <summary><span>Bitcoin mempool trace <small>RESEARCH SKETCH</small></span><b>+</b></summary>
+              <p>An idea to study how transactions move from the mempool into blocks and what affects inclusion priority. The audited snapshot contains a README and empty analysis/collector files; implementation is still ahead.</p>
+              <a class="text-link" href="https://github.com/Sidharth8100/bitcoin_mempool_trace" target="_blank" rel="noopener">Open the sketch ↗</a>
+            </details>
+            <details>
+              <summary><span>The GitHub profile <small>PROFILE & LINKS</small></span><b>+</b></summary>
+              <p>The introduction and repository links that connect the work. Older profile statistics are historical snapshots; current portfolio achievements use the supplied resume.</p>
+              <a class="text-link" href="https://github.com/Sidharth8100/Sidharth8100" target="_blank" rel="noopener">Explore the profile ↗</a>
+            </details>
+          </div>
+        </div>
         <a
           class="archive-link"
           href="https://github.com/Sidharth8100?tab=repositories"
@@ -582,14 +613,14 @@
               <summary><span>03</span> Intelligence & vision <b>+</b></summary>
               <p>
                 PyTorch · TensorFlow · Keras · Scikit-learn · OpenCV · CUDA ·
-                CNNs · XGBoost · NLP · OCR
+                CNNs · XGBoost · NLP · OCR · OpenCLIP · ONNX · Speech synthesis
               </p>
             </details>
             <details>
               <summary><span>04</span> Delivery & interfaces <b>+</b></summary>
               <p>
                 Docker · Kubernetes · Git · Linux · CI/CD · Prometheus · Grafana
-                · Google Cloud APIs · React · Flutter · Firebase
+                · Google Cloud APIs · React · TypeScript · Flutter · Vite · Three.js
               </p>
             </details>
           </div>
