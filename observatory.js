@@ -8,7 +8,13 @@
   const launch = document.querySelector("#launch-journey");
   const launchLabel = document.querySelector("#launch-signal");
   const launchButtons = [launch, launchLabel];
-  const destinations = {contact: "THE NEXT GOOD PROBLEM", journey: "MY JOURNEY", work: "MY WORK", arena: "THE ARENA", about: "THE STORY"};
+  const destinations = {
+    contact: "THE NEXT GOOD PROBLEM",
+    journey: "MY JOURNEY",
+    work: "MY WORK",
+    arena: "THE ARENA",
+    about: "THE STORY",
+  };
   const toggle = document.querySelector("#motion-toggle");
   const overlay = document.querySelector("#flight-overlay");
   const flightCanvas = document.querySelector("#flight-canvas");
@@ -276,7 +282,9 @@
     flight = null;
     overlay.hidden = true;
     scene.classList.remove("is-launching");
-    launchButtons.forEach((button) => { button.disabled = false; });
+    launchButtons.forEach((button) => {
+      button.disabled = false;
+    });
     flightCtx?.clearRect(0, 0, flightCanvas.width, flightCanvas.height);
     sync();
   }
@@ -290,7 +298,9 @@
     cancelAnimationFrame(frame);
     scene.classList.remove("is-engaged");
     scene.classList.add("is-launching");
-    launchButtons.forEach((button) => { button.disabled = true; });
+    launchButtons.forEach((button) => {
+      button.disabled = true;
+    });
     const bounds = canvas.getBoundingClientRect(),
       w = innerWidth,
       h = innerHeight,
@@ -308,7 +318,12 @@
         const theta = i * 2.399963;
         // A circle beyond all four corners puts every final point off screen,
         // including when the launch begins near a viewport edge on a phone.
-        const distance = Math.hypot(Math.max(origin.x, w - origin.x), Math.max(origin.y, h - origin.y)) * (1.15 + (i % 13) * 0.035);
+        const distance =
+          Math.hypot(
+            Math.max(origin.x, w - origin.x),
+            Math.max(origin.y, h - origin.y),
+          ) *
+          (1.15 + (i % 13) * 0.035);
         return {
           x: bounds.left + p.x,
           y: bounds.top + p.y,
@@ -334,7 +349,8 @@
   }
   function drawFlight(now) {
     if (!flight) return;
-    const f = flight, t = (now - f.started) / 1000;
+    const f = flight,
+      t = (now - f.started) / 1000;
     if (t >= 1.55) {
       finishFlight(true);
       return;
@@ -345,8 +361,8 @@
     }
     flightCtx.clearRect(0, 0, f.w, f.h);
     // A dim bridge hides the section jump; no bright flash or text over the art.
-    const shade = t < 0.22 ? mix(0, 0.76, t / 0.22)
-      : 0.76 * (1 - ease((t - 1.12) / 0.43));
+    const shade =
+      t < 0.22 ? mix(0, 0.76, t / 0.22) : 0.76 * (1 - ease((t - 1.12) / 0.43));
     flightCtx.fillStyle = `rgba(12,16,9,${shade})`;
     flightCtx.fillRect(0, 0, f.w, f.h);
     const travel = (value) => {
@@ -354,8 +370,11 @@
       return q * 0.35 + q * q * 0.65;
     };
     for (const p of f.sparks) {
-      const sx = mix(p.x, f.origin.x, 0.12), sy = mix(p.y, f.origin.y, 0.12);
-      let x, y, alpha = 1;
+      const sx = mix(p.x, f.origin.x, 0.12),
+        sy = mix(p.y, f.origin.y, 0.12);
+      let x,
+        y,
+        alpha = 1;
       if (t < 0.18) {
         const q = ease(t / 0.18);
         x = mix(p.x, sx, q);
@@ -383,19 +402,35 @@
       flightCtx.strokeStyle = `rgba(222,244,159,${(1 - q) * 0.32})`;
       flightCtx.lineWidth = 1;
       flightCtx.beginPath();
-      flightCtx.arc(f.origin.x, f.origin.y, 12 + travel(q) * Math.hypot(f.w, f.h), 0, TAU);
+      flightCtx.arc(
+        f.origin.x,
+        f.origin.y,
+        12 + travel(q) * Math.hypot(f.w, f.h),
+        0,
+        TAU,
+      );
       flightCtx.stroke();
     }
     f.frame = requestAnimationFrame(drawFlight);
   }
-  launchButtons.forEach((button) => button.addEventListener("click", startFlight));
+  launchButtons.forEach((button) =>
+    button.addEventListener("click", startFlight),
+  );
   document.querySelectorAll("[data-destination]").forEach((button) =>
     button.addEventListener("click", () => {
       if (flight) return;
       destination = button.dataset.destination;
-      document.querySelectorAll("[data-destination]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
-      document.querySelector("#launch-label").textContent = `ENTER ${destinations[destination]}`;
-      launchButtons.forEach((b) => b.setAttribute("aria-label", `Burst the sculpture and explore ${destinations[destination].toLowerCase()}`));
+      document
+        .querySelectorAll("[data-destination]")
+        .forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+      document.querySelector("#launch-label").textContent =
+        `ENTER ${destinations[destination]}`;
+      launchButtons.forEach((b) =>
+        b.setAttribute(
+          "aria-label",
+          `Burst the sculpture and explore ${destinations[destination].toLowerCase()}`,
+        ),
+      );
     }),
   );
   document.addEventListener("keydown", (event) => {

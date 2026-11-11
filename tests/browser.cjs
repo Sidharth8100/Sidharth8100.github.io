@@ -48,16 +48,25 @@ fs.mkdirSync(out, { recursive: true });
       "true",
     );
   }
-  assert.equal(await page.locator(".project-card").first().getAttribute("data-id"), "comics");
+  assert.equal(
+    await page.locator(".project-card").first().getAttribute("data-id"),
+    "comics",
+  );
   await page.locator("#project-search").fill("OpenCLIP");
   assert.equal(await page.locator(".project-card:visible").count(), 1);
-  assert.equal(await page.locator(".project-card:visible").getAttribute("data-id"), "comics");
+  assert.equal(
+    await page.locator(".project-card:visible").getAttribute("data-id"),
+    "comics",
+  );
   await page.locator('[data-filter="systems"]').click();
   assert.equal(await page.locator(".project-card:visible").count(), 0);
   assert.ok(await page.locator("#project-empty").isVisible());
   await page.locator("#clear-project-search").click();
   assert.equal(await page.locator(".project-card:visible").count(), 9);
-  assert.equal(await page.locator(":focus").getAttribute("id"), "project-search");
+  assert.equal(
+    await page.locator(":focus").getAttribute("id"),
+    "project-search",
+  );
   await page.locator("#project-search").fill("<img src=x>");
   assert.equal(await page.locator("#project-empty img").count(), 0);
   assert.ok(await page.locator("#project-empty").isVisible());
@@ -65,16 +74,24 @@ fs.mkdirSync(out, { recursive: true });
   for (const id of ["comics", "encrypt", "cifar", "portfolio"]) {
     await page.locator(`[data-project="${id}"]`).first().click();
     const steps = page.locator("[data-flow-step]");
-    for (let i = 0; i < await steps.count(); i++) {
+    for (let i = 0; i < (await steps.count()); i++) {
       await steps.nth(i).click();
       assert.equal(await steps.nth(i).getAttribute("aria-pressed"), "true");
-      assert.equal(await page.locator('[data-flow-step][aria-pressed="true"]').count(), 1);
-      assert.ok((await page.locator("#flow-detail p").textContent()).length > 60);
+      assert.equal(
+        await page.locator('[data-flow-step][aria-pressed="true"]').count(),
+        1,
+      );
+      assert.ok(
+        (await page.locator("#flow-detail p").textContent()).length > 60,
+      );
     }
     await page.keyboard.press("Escape");
   }
   await page.locator('[data-project="comics"]').first().click();
-  assert.equal(await page.locator('[data-flow-step="0"]').getAttribute("aria-pressed"), "true");
+  assert.equal(
+    await page.locator('[data-flow-step="0"]').getAttribute("aria-pressed"),
+    "true",
+  );
   assert.match(await page.locator("#project-detail").textContent(), /28/);
   assert.match(await page.locator("#project-detail").textContent(), /13/);
   await page.keyboard.press("Escape");

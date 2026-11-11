@@ -34,7 +34,10 @@ fs.mkdirSync("test-results", { recursive: true });
   await page.screenshot({ path: "test-results/reactive-hero.png" });
   const label = await page.locator("#launch-signal").boundingBox();
   const sculpture = await page.locator("#system-canvas").boundingBox();
-  assert.ok(label.y >= sculpture.y + sculpture.height, "Launch label overlaps artwork");
+  assert.ok(
+    label.y >= sculpture.y + sculpture.height,
+    "Launch label overlaps artwork",
+  );
   const historyBeforeFlight = await page.evaluate(() => history.length);
   await trigger.click({ position: { x: r.width * 0.65, y: r.height * 0.5 } });
   await trigger.dispatchEvent("click"); // Re-entrant activation must not launch a second flight.
@@ -44,17 +47,32 @@ fs.mkdirSync("test-results", { recursive: true });
   assert.deepEqual(fullscreen, { x: 0, y: 0, width: 1440, height: 1000 });
   // Bright particles must escape the hero bounds, not merely fill a local canvas.
   const escaped = await page.locator("#flight-canvas").evaluate((c) => {
-    const scene = document.querySelector(".orbital-scene").getBoundingClientRect();
-    const ctx = c.getContext("2d"), data = ctx.getImageData(0, 0, c.width, c.height).data;
+    const scene = document
+      .querySelector(".orbital-scene")
+      .getBoundingClientRect();
+    const ctx = c.getContext("2d"),
+      data = ctx.getImageData(0, 0, c.width, c.height).data;
     const ratio = c.width / innerWidth;
     let count = 0;
-    for (let y = 0; y < c.height; y += 3) for (let x = 0; x < c.width; x += 3) {
-      const i = (y * c.width + x) * 4;
-      if ((x / ratio < scene.left || x / ratio > scene.right || y / ratio < scene.top || y / ratio > scene.bottom) && data[i + 1] > 100 && data[i + 3] > 30) count++;
-    }
+    for (let y = 0; y < c.height; y += 3)
+      for (let x = 0; x < c.width; x += 3) {
+        const i = (y * c.width + x) * 4;
+        if (
+          (x / ratio < scene.left ||
+            x / ratio > scene.right ||
+            y / ratio < scene.top ||
+            y / ratio > scene.bottom) &&
+          data[i + 1] > 100 &&
+          data[i + 3] > 30
+        )
+          count++;
+      }
     return count;
   });
-  assert.ok(escaped > 50, `Only ${escaped} particle samples escaped the hero bounds`);
+  assert.ok(
+    escaped > 50,
+    `Only ${escaped} particle samples escaped the hero bounds`,
+  );
   await page.screenshot({ path: "test-results/particle-burst.png" });
   await page.waitForURL("**/#contact");
   await page.waitForFunction(
