@@ -33,6 +33,8 @@ fs.mkdirSync(out, { recursive: true });
     fullPage: true,
   });
   await page.screenshot({ path: path.join(out, "hero.png") });
+  await page.locator(".collection-heading").scrollIntoViewIfNeeded();
+  await page.screenshot({ path: path.join(out, "project-collection.png") });
   for (const [filter, count] of [
     ["systems", 3],
     ["ai", 3],
@@ -210,6 +212,14 @@ fs.mkdirSync(out, { recursive: true });
       () => document.documentElement.scrollWidth > innerWidth,
     );
     assert.equal(overflow, false, `Horizontal overflow at ${width}`);
+    const canvasBounds = await page.locator("#system-canvas").boundingBox();
+    const labelBounds = await page.locator("#launch-signal").boundingBox();
+    assert.ok(
+      labelBounds.y >= canvasBounds.y + canvasBounds.height,
+      `Launch label covers canvas at ${width}`,
+    );
+    const controls = await page.locator(".orbital-destinations").boundingBox();
+    assert.ok(controls.x >= 0 && controls.x + controls.width <= width);
     if (width === 390) {
       await page.screenshot({
         path: path.join(out, "mobile.png"),

@@ -1,42 +1,29 @@
-# Verification — November 11, 2026
+# Verification — November 12, 2026
 
-## Passed
+## Project and interaction update
 
-- JavaScript syntax validation and `git diff --check`.
-- Isolated Google Chrome / Playwright browser regression suite (`tests/browser.cjs`).
-- Seven viewport widths: 1440, 1024, 768, 760, 390, 375, and 320 pixels; no document horizontal overflow.
-- All four project filters and all eight project detail dialogs.
+The collection now contains nine gallery projects plus featured WARDEN. Panel leads the grid; older projects remain. All eleven audited public repositories are represented through case studies or the repository notebook, while employer DataVerse remains a separate resume-backed case. No private repository content or dossier tree is published.
+
+The launch label is below the sculpture canvas. The fixed viewport overlay briefly compresses the particles and sends them outward beyond the screen. It reveals Contact (the next good problem) by default, with Journey, Work, Arena, and About selectable. No general section padding was changed. Flight captions and the stray helper-markup character were removed.
+
+## Checks
+
+- JavaScript syntax and Git whitespace checks.
+- `tests/browser.cjs`: nine gallery cards; three cards in each category; combined text/category search; no-result reset and safe handling of markup-like queries.
+- Ten case-study dialogs open/close. Architecture controls for Panel, EncryptiView, CIFAR-10, and the portfolio select one step at a time and reset correctly when reopened.
+- Repository notebook disclosure identifies the Bitcoin collector as unimplemented.
 - WARDEN node selection and event trace completion.
-- BFS default fixture: shortest route of 18 edges; unreachable map; reset; arrow-key cell navigation.
-- Reset during animated search cancels pending rendering without stale highlights.
-- Ctrl/Cmd+K palette search, Enter selection, empty results, and Escape handling.
-- Reduced-motion default, manual motion toggle, expandable experience rows.
-- Clipboard success with browser permission; source includes an explicit manual-copy fallback when unavailable.
-- All local HTML asset references, resume download, and social preview return HTTP 200.
-- Old `#/work` route normalizes to `#work`, including same-document navigation.
-- JavaScript-disabled core content and project fallback remain visible.
-- No browser page errors or failed resource responses in the regression run.
-- axe-core 4.10.3: zero violations for the WCAG 2 A/AA and 2.1 AA rule tags on desktop, mobile, the project dialog, and the navigation dialog.
-- Visual inspection: desktop hero and page composition, about section/avatar, arena, 390px hero/playground/dialog, and 1200×630 social preview.
-- Source formatted with Prettier; no production dependencies added.
+- BFS default shortest route of 18 edges, unreachable map, reset and keyboard navigation.
+- Command palette search/selection, empty result handling, reduced motion, disclosures, legacy hash routes and no-JavaScript fallback.
+- All local asset references respond successfully, including the resume and share image. Zero page errors or failed resource responses in the regression suite.
+- Seven responsive widths: 1440, 1024, 768, 760, 390, 375 and 320 pixels; no document horizontal overflow.
+- `tests/interactions.cjs`: pointer engagement; label below canvas; overlay dimensions equal the viewport; bright particle samples demonstrably escape hero bounds; one navigation per flight; all five destinations; destination heading focus; Escape skip; paused/reduced-motion immediate navigation; resize recovery; project artwork; mobile touch.
+- `tests/accessibility.cjs`: axe-core 4.10.3, WCAG 2 A/AA and 2.1 AA tags, zero violations in tested desktop, mobile, WARDEN dialog, Panel architecture dialog and command dialog views. Clipboard success and reset during animated BFS also pass.
+- Visual review of the desktop hero, mobile sculpture, viewport particle burst, project collection and mobile Panel architecture inspector.
+- Prettier 3.6.2 formatting; no production dependencies added.
 
-## Verification scope
+## Scope
 
-These checks used local headless Google Chrome. They do not constitute manual screen-reader, Safari, or Firefox certification. The app's visible-browser preview host was unavailable. Screenshots and automated browser checks were performed in an isolated local browser instead.
+Checks use local Google Chrome and Playwright, with an additional in-app browser review of the hero and Panel case study. This is not manual screen-reader, Safari, or Firefox certification. Source claims come from the repository audit or the supplied resume/local WARDEN evidence; underlying project training jobs and backend suites were not re-run for this website change. Stored notebook results and configured limits are labeled accordingly.
 
-External profile URLs are drawn from the supplied resume, existing site, and public GitHub sources; third-party pages were not exhaustively availability-tested. LeetCode/CodeChef achievements are dated resume snapshots, not live API statistics. The LeetCode profile URL comes from the public GitHub README, and no CodeChef handle was guessed.
-
-No deployment or remote mutation was performed. GitHub Pages compatibility is structural and locally tested: the repository root is a static site, with relative assets, no server APIs, no build step, no external fonts, and no rewrite requirement. Pushing/deployment remains with the owner.
-
-## Reactive interaction upgrade
-
-- Replaced direct pointer-to-rotation mapping with smoothed rotation and per-particle damped springs. Mesh connections use the same displaced points as the dots.
-- Added explicit, keyboard-operable sculpture launch with four destinations. The full-screen particle overlay follows a finite 1.85-second lifecycle: compress, scatter, converge.
-- Default destination is Journey. Every destination receives a hash entry, focus on its heading, and a screen-reader status update.
-- Tested mouse, Enter, and mobile touch launch; repeated activation creates only one navigation entry.
-- Tested Escape skip, paused immediate navigation, reduced-motion immediate navigation, and viewport resize recovery. The overlay never captures pointer input. Wheel/touch movement and background visibility changes also have explicit cleanup paths.
-- Tested clickable project artwork and hover engagement; surface animation frames stop once the tilt settles.
-- Existing regression suite still passes all filters, dialogs, BFS cases, seven responsive widths, legacy routes, and no-JavaScript fallback.
-- Updated axe scans pass for desktop, mobile, project dialog, and command dialog.
-- Visually reviewed the hovered sculpture, full-screen burst, destination arrival, and mobile controls. No full-screen bright flash, audio, or new runtime dependency was added.
-- Reused the already-running local preview server; no user-owned server was stopped or replaced.
+The portfolio remains static at the repository root with relative assets, `.nojekyll`, no build requirement, no server API, and no external fonts. No remote mutation, push or deployment was performed in this session. Screenshots and accessibility reports are saved under ignored `test-results/`.
