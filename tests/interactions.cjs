@@ -32,19 +32,37 @@ fs.mkdirSync("test-results", { recursive: true });
     true,
   );
   await page.screenshot({ path: "test-results/reactive-hero.png" });
+  const label = await page.locator("#launch-signal").boundingBox();
+  const sculpture = await page.locator("#system-canvas").boundingBox();
+  assert.ok(label.y >= sculpture.y + sculpture.height, "Launch label overlaps artwork");
   const historyBeforeFlight = await page.evaluate(() => history.length);
   await trigger.click({ position: { x: r.width * 0.65, y: r.height * 0.5 } });
   await trigger.dispatchEvent("click"); // Re-entrant activation must not launch a second flight.
   assert.equal(await page.locator("#flight-overlay").isVisible(), true);
-  await page.waitForTimeout(420);
+  await page.waitForTimeout(650);
+  const fullscreen = await page.locator("#flight-overlay").boundingBox();
+  assert.deepEqual(fullscreen, { x: 0, y: 0, width: 1440, height: 1000 });
+  // Bright particles must escape the hero bounds, not merely fill a local canvas.
+  const escaped = await page.locator("#flight-canvas").evaluate((c) => {
+    const scene = document.querySelector(".orbital-scene").getBoundingClientRect();
+    const ctx = c.getContext("2d"), data = ctx.getImageData(0, 0, c.width, c.height).data;
+    const ratio = c.width / innerWidth;
+    let count = 0;
+    for (let y = 0; y < c.height; y += 3) for (let x = 0; x < c.width; x += 3) {
+      const i = (y * c.width + x) * 4;
+      if ((x / ratio < scene.left || x / ratio > scene.right || y / ratio < scene.top || y / ratio > scene.bottom) && data[i + 1] > 100 && data[i + 3] > 30) count++;
+    }
+    return count;
+  });
+  assert.ok(escaped > 50, `Only ${escaped} particle samples escaped the hero bounds`);
   await page.screenshot({ path: "test-results/particle-burst.png" });
-  await page.waitForURL("**/#journey");
+  await page.waitForURL("**/#contact");
   await page.waitForFunction(
     () => document.querySelector("#flight-overlay").hidden,
   );
   assert.equal(
     await page.locator(":focus").getAttribute("id"),
-    "journey-title",
+    "contact-title",
   );
   assert.equal(await trigger.isEnabled(), true);
   assert.equal(
@@ -53,7 +71,7 @@ fs.mkdirSync("test-results", { recursive: true });
   );
   await page.screenshot({ path: "test-results/journey-arrival.png" });
   // Each destination is real navigation, not a decorative control.
-  for (const destination of ["work", "arena", "about"]) {
+  for (const destination of ["journey", "work", "arena", "about"]) {
     await page.locator(".identity").click();
     await page.locator(`[data-destination="${destination}"]`).click();
     await trigger.focus();
@@ -69,7 +87,7 @@ fs.mkdirSync("test-results", { recursive: true });
   }
   await page.locator(".identity").click();
   await page.locator('[data-destination="journey"]').click();
-  await trigger.click();
+  await page.locator("#launch-signal").click();
   await page.keyboard.press("Escape");
   assert.equal(await page.locator("#flight-overlay").isVisible(), false);
   assert.equal(new URL(page.url()).hash, "#journey");
@@ -128,7 +146,7 @@ fs.mkdirSync("test-results", { recursive: true });
     .locator(".orbital-scene")
     .screenshot({ path: "test-results/mobile-sculpture.png" });
   await mobile.locator("#launch-journey").tap();
-  await mobile.waitForURL("**/#journey");
+  await mobile.waitForURL("**/#contact");
   await mobile.waitForFunction(
     () => document.querySelector("#flight-overlay").hidden,
   );
@@ -140,7 +158,7 @@ fs.mkdirSync("test-results", { recursive: true });
   );
   assert.deepEqual(errors, []);
   console.log(
-    "PASS: pointer engagement, particle flight, four destinations, keyboard focus, Escape, pause, reduced motion, resize recovery, project artwork, touch navigation.",
+    "PASS: pointer engagement, full-viewport outward particle flight, five destinations, keyboard focus, Escape, pause, reduced motion, resize recovery, project artwork, touch navigation.",
   );
   await browser.close();
 })().catch((e) => {

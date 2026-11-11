@@ -27,17 +27,17 @@ fs.mkdirSync(out, { recursive: true });
   });
   await page.goto(base, { waitUntil: "networkidle" });
   assert.match(await page.title(), /Sidharth Bhagat/);
-  assert.equal(await page.locator(".project-card:visible").count(), 7);
+  assert.equal(await page.locator(".project-card:visible").count(), 9);
   await page.screenshot({
     path: path.join(out, "desktop.png"),
     fullPage: true,
   });
   await page.screenshot({ path: path.join(out, "hero.png") });
   for (const [filter, count] of [
-    ["systems", 2],
+    ["systems", 3],
     ["ai", 3],
-    ["apps", 2],
-    ["all", 7],
+    ["apps", 3],
+    ["all", 9],
   ]) {
     await page.locator(`[data-filter="${filter}"]`).click();
     assert.equal(await page.locator(".project-card:visible").count(), count);
@@ -48,6 +48,40 @@ fs.mkdirSync(out, { recursive: true });
       "true",
     );
   }
+  assert.equal(await page.locator(".project-card").first().getAttribute("data-id"), "comics");
+  await page.locator("#project-search").fill("OpenCLIP");
+  assert.equal(await page.locator(".project-card:visible").count(), 1);
+  assert.equal(await page.locator(".project-card:visible").getAttribute("data-id"), "comics");
+  await page.locator('[data-filter="systems"]').click();
+  assert.equal(await page.locator(".project-card:visible").count(), 0);
+  assert.ok(await page.locator("#project-empty").isVisible());
+  await page.locator("#clear-project-search").click();
+  assert.equal(await page.locator(".project-card:visible").count(), 9);
+  assert.equal(await page.locator(":focus").getAttribute("id"), "project-search");
+  await page.locator("#project-search").fill("<img src=x>");
+  assert.equal(await page.locator("#project-empty img").count(), 0);
+  assert.ok(await page.locator("#project-empty").isVisible());
+  await page.locator("#clear-project-search").click();
+  for (const id of ["comics", "encrypt", "cifar", "portfolio"]) {
+    await page.locator(`[data-project="${id}"]`).first().click();
+    const steps = page.locator("[data-flow-step]");
+    for (let i = 0; i < await steps.count(); i++) {
+      await steps.nth(i).click();
+      assert.equal(await steps.nth(i).getAttribute("aria-pressed"), "true");
+      assert.equal(await page.locator('[data-flow-step][aria-pressed="true"]').count(), 1);
+      assert.ok((await page.locator("#flow-detail p").textContent()).length > 60);
+    }
+    await page.keyboard.press("Escape");
+  }
+  await page.locator('[data-project="comics"]').first().click();
+  assert.equal(await page.locator('[data-flow-step="0"]').getAttribute("aria-pressed"), "true");
+  assert.match(await page.locator("#project-detail").textContent(), /28/);
+  assert.match(await page.locator("#project-detail").textContent(), /13/);
+  await page.keyboard.press("Escape");
+  const notebook = page.locator(".notebook-entries details").first();
+  await notebook.locator("summary").click();
+  assert.match(await notebook.textContent(), /empty analysis/);
+  await notebook.locator("summary").click();
   for (const id of [
     "warden",
     "dataverse",
@@ -57,6 +91,8 @@ fs.mkdirSync(out, { recursive: true });
     "tree",
     "bank",
     "jarvis",
+    "portfolio",
+    "codsoft",
   ]) {
     await page.locator(`[data-project="${id}"]`).first().click();
     assert.equal(
@@ -186,7 +222,7 @@ fs.mkdirSync(out, { recursive: true });
   assert.deepEqual(errors, []);
   assert.deepEqual(badResponses, []);
   console.log(
-    "PASS: filters, 8 dialogs, event trace, BFS reachable/unreachable, reset, keyboard grid, palette, reduced motion, disclosures, local assets, 7 responsive widths, legacy routing, no-JS fallback, zero page errors.",
+    "PASS: combined search/filters, 10 dialogs, architecture steps, repository notebook, event trace, BFS reachable/unreachable, reset, keyboard grid, palette, reduced motion, disclosures, local assets, 7 responsive widths, legacy routing, no-JS fallback, zero page errors.",
   );
   await browser.close();
 })().catch((error) => {
