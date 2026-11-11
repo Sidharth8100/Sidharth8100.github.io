@@ -34,4 +34,4 @@ Edit project content in `script.js`, page content in `index.html`, and styles in
 
 ## Collection coverage
 
-Nine gallery case studies plus featured WARDEN retain the earlier work and prioritize Panel and current application details. The notebook links the Bitcoin sketch and profile. All eleven audited public repositories are represented; private practice repositories and the private dossier directory are not published. The internship case remains resume-backed. Source review is not an assertion that all underlying project test suites were executed.
+Nine gallery case studies plus featured WARDEN retain the earlier work and prioritize Panel and current application details. Unimplemented Bitcoin ideas and the profile notebook were removed at the user's request; implemented projects remain. private practice repositories and the private dossier directory are not published. The internship case remains resume-backed. Source review is not an assertion that all underlying project test suites were executed.

@@ -2,7 +2,7 @@
 
 ## Project and interaction update
 
-The collection now contains nine gallery projects plus featured WARDEN. Panel leads the grid; older projects remain. All eleven audited public repositories are represented through case studies or the repository notebook, while employer DataVerse remains a separate resume-backed case. No private repository content or dossier tree is published.
+The collection now contains nine gallery projects plus featured WARDEN. Panel leads the grid; older projects remain. Implemented projects remain; the ideas/profile notebook was removed by request. Employer DataVerse remains a separate resume-backed case. No private repository content or dossier tree is published.
 
 The launch label is below the sculpture canvas. The fixed viewport overlay briefly compresses the particles and sends them outward beyond the screen. It reveals Contact (the next good problem) by default, with Journey, Work, Arena, and About selectable. No general section padding was changed. Flight captions and the stray helper-markup character were removed.
 
@@ -11,7 +11,7 @@ The launch label is below the sculpture canvas. The fixed viewport overlay brief
 - JavaScript syntax and Git whitespace checks.
 - `tests/browser.cjs`: nine gallery cards; three cards in each category; combined text/category search; no-result reset and safe handling of markup-like queries.
 - Ten case-study dialogs open/close. Architecture controls for Panel, EncryptiView, CIFAR-10, and the portfolio select one step at a time and reset correctly when reopened.
-- Repository notebook disclosure identifies the Bitcoin collector as unimplemented.
+- Removed the ideas/profile notebook; project browsing now supports previous/next controls and keyboard architecture steps.
 - WARDEN node selection and event trace completion.
 - BFS default shortest route of 18 edges, unreachable map, reset and keyboard navigation.
 - Command palette search/selection, empty result handling, reduced motion, disclosures, legacy hash routes and no-JavaScript fallback.

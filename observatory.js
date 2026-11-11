@@ -34,6 +34,7 @@
   let paused = reduced.matches,
     destination = "contact",
     flight = null;
+  let pressed = false, charge = 0;
   let hovered = false,
     hoverEnergy = 0;
   const pointer = { x: 0, y: 0, targetX: 0, targetY: 0, tiltX: 0, tiltY: 0 };
@@ -69,7 +70,7 @@
       z1 = y * Math.sin(rx) + z * Math.cos(rx);
     const x1 = x * Math.cos(ry) + z1 * Math.sin(ry),
       z2 = -x * Math.sin(ry) + z1 * Math.cos(ry);
-    const scale = Math.min(width, height) * 0.285,
+    const scale = Math.min(width, height) * 0.285 * (1 - charge * 0.09),
       perspective = 3.8 / (3.8 + z2);
     return {
       x:
@@ -85,6 +86,7 @@
     if (!ctx || !width) return;
     ctx.clearRect(0, 0, width, height);
     const response = 1 - Math.pow(0.88, dt);
+    charge = mix(charge, pressed && !paused ? 1 : 0, response);
     pointer.x = mix(pointer.x, pointer.targetX, response);
     pointer.y = mix(pointer.y, pointer.targetY, response);
     pointer.tiltX = mix(
@@ -214,6 +216,9 @@
     ctx?.setTransform(ratio, 0, 0, ratio, 0, 0);
     draw();
   }
+  launch.addEventListener("pointerdown", () => { if (!paused) pressed = true; });
+  window.addEventListener("pointerup", () => { pressed = false; });
+  window.addEventListener("pointercancel", () => { pressed = false; });
   launch.addEventListener("pointerenter", (event) => {
     if (!finePointer.matches || paused) return;
     const r = canvas.getBoundingClientRect();
@@ -229,6 +234,7 @@
     pointer.targetY = clamp(event.clientY - r.top, 0, height);
   });
   launch.addEventListener("pointerleave", () => {
+    pressed = false;
     hovered = false;
     scene.classList.remove("is-engaged");
   });
