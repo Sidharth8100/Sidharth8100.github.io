@@ -41,3 +41,15 @@ Core profile, experience, achievements, contact details and resume remain availa
 - `tests/`: browser smoke/regression checks
 
 The old compiled app remains recoverable through Git history.
+
+## Optional development checks
+
+The website itself needs no Node packages. To run the retained browser tests, install Playwright 1.57 and axe-core 4.10 in your development environment:
+
+```sh
+npm install --no-save --package-lock=false playwright@1.57.0 axe-core@4.10.3
+node tests/browser.cjs
+node tests/accessibility.cjs
+```
+
+Start the preview server first. Tests use installed Google Chrome at `/usr/bin/google-chrome`; set `CHROME_PATH` for a different installation. `PORTFOLIO_PLAYWRIGHT` and `PORTFOLIO_AXE` can point to existing package installations instead of installing anything here. Screenshots and reports go into ignored `test-results/`.
