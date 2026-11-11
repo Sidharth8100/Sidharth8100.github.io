@@ -413,7 +413,13 @@ function openProject(id) {
   if (!p) return;
   $("#project-detail").innerHTML =
     `<p class="eyebrow">${p.categoryLabel.toUpperCase()} / ${p.year}</p><h2 id="dialog-title">${p.name}</h2><p class="detail-lede">${p.lede}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div><h3>The problem</h3><p>${p.problem}</p>${p.stats.length ? `<div class="detail-stats">${p.stats.map((s) => `<div><strong>${s[0]}</strong><span>${s[1]}</span></div>`).join("")}</div>` : ""}${p.flow ? `<section class="flow-explorer" aria-labelledby="flow-heading"><h3 id="flow-heading">Follow the data</h3><div class="flow-steps" role="group" aria-label="Architecture steps">${p.flow.map((step, i) => `<button data-flow-step="${i}" aria-pressed="${i === 0}" aria-controls="flow-detail"><span>${String(i + 1).padStart(2, "0")}</span>${step[0]}</button>`).join("")}</div><div id="flow-detail" aria-live="polite"><strong>${p.flow[0][0]}</strong><p>${p.flow[0][1]}</p></div></section>` : ""}<h3>Inside the engineering</h3><ul>${p.approach.map((a) => `<li>${a}</li>`).join("")}</ul><p class="note">${p.note}</p><div class="detail-links">${p.link ? `<a class="button primary" href="https://github.com/Sidharth8100/${p.link}" target="_blank" rel="noopener">Explore source ↗</a>` : ""}<a class="text-link" href="assets/SidharthBhagat.pdf" target="_blank" rel="noopener">Read the resume ↗</a></div>`;
-  $$("[data-flow-step]", projectDialog).forEach((button) => {
+  $$("[data-flow-step]", projectDialog).forEach((button, index, buttons) => {
+    button.addEventListener("keydown", (event) => {
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      const target = event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1 : (index + (event.key === "ArrowRight" ? 1 : -1) + buttons.length) % buttons.length;
+      buttons[target].focus(); buttons[target].click();
+    });
     button.addEventListener("click", () => {
       $$("[data-flow-step]", projectDialog).forEach((b) =>
         b.setAttribute("aria-pressed", String(b === button)),
@@ -423,7 +429,21 @@ function openProject(id) {
       $("#flow-detail p").textContent = step[1];
     });
   });
-  projectDialog.showModal();
+  const position = allProjects.indexOf(p);
+  const navigation = document.createElement("nav");
+  navigation.className = "case-navigation";
+  navigation.setAttribute("aria-label", "Browse case studies");
+  for (const [offset, label] of [[-1, "← Previous project"], [1, "Next project →"]]) {
+    const next = allProjects[(position + offset + allProjects.length) % allProjects.length];
+    const button = document.createElement("button");
+    button.textContent = label;
+    button.title = next.name;
+    button.addEventListener("click", () => { openProject(next.id); document.querySelector("#dialog-title").focus(); });
+    navigation.append(button);
+  }
+  $("#project-detail").append(navigation);
+  $("#dialog-title").setAttribute("tabindex", "-1");
+  if (!projectDialog.open) projectDialog.showModal();
   projectDialog.scrollTop = 0;
 }
 document.addEventListener("click", (event) => {
