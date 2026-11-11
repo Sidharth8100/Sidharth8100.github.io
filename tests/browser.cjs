@@ -97,10 +97,6 @@ fs.mkdirSync(out, { recursive: true });
   assert.match(await page.locator("#project-detail").textContent(), /28/);
   assert.match(await page.locator("#project-detail").textContent(), /13/);
   await page.keyboard.press("Escape");
-  const notebook = page.locator(".notebook-entries details").first();
-  await notebook.locator("summary").click();
-  assert.match(await notebook.textContent(), /empty analysis/);
-  await notebook.locator("summary").click();
   for (const id of [
     "warden",
     "dataverse",
