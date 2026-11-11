@@ -6,6 +6,9 @@
   const canvas = document.querySelector("#system-canvas");
   const ctx = canvas.getContext("2d");
   const launch = document.querySelector("#launch-journey");
+  const launchLabel = document.querySelector("#launch-signal");
+  const launchButtons = [launch, launchLabel];
+  const destinations = {contact: "THE NEXT GOOD PROBLEM", journey: "MY JOURNEY", work: "MY WORK", arena: "THE ARENA", about: "THE STORY"};
   const toggle = document.querySelector("#motion-toggle");
   const overlay = document.querySelector("#flight-overlay");
   const flightCanvas = document.querySelector("#flight-canvas");
@@ -23,7 +26,7 @@
     lastTime = 0,
     onScreen = true;
   let paused = reduced.matches,
-    destination = "journey",
+    destination = "contact",
     flight = null;
   let hovered = false,
     hoverEnergy = 0;
@@ -248,7 +251,8 @@
     { threshold: 0.05 },
   ).observe(canvas);
 
-  // The launch follows three deterministic phases: implode, scatter, reassemble.
+  // The launch compresses briefly, then every spark travels beyond the viewport.
+  // Particle coordinates are in viewport space, independent of the hero container.
   // The overlay never captures input; Escape, scrolling, or a tab switch can end it.
   function navigate() {
     const section = document.getElementById(destination),
@@ -272,7 +276,7 @@
     flight = null;
     overlay.hidden = true;
     scene.classList.remove("is-launching");
-    launch.disabled = false;
+    launchButtons.forEach((button) => { button.disabled = false; });
     flightCtx?.clearRect(0, 0, flightCanvas.width, flightCanvas.height);
     sync();
   }
@@ -286,7 +290,7 @@
     cancelAnimationFrame(frame);
     scene.classList.remove("is-engaged");
     scene.classList.add("is-launching");
-    launch.disabled = true;
+    launchButtons.forEach((button) => { button.disabled = true; });
     const bounds = canvas.getBoundingClientRect(),
       w = innerWidth,
       h = innerHeight,
@@ -302,20 +306,18 @@
       .filter((_, i) => i % 2 === 0)
       .map((p, i) => {
         const theta = i * 2.399963;
-        const distance = 110 + ((i * 79) % 460);
+        // A circle beyond all four corners puts every final point off screen,
+        // including when the launch begins near a viewport edge on a phone.
+        const distance = Math.hypot(Math.max(origin.x, w - origin.x), Math.max(origin.y, h - origin.y)) * (1.15 + (i % 13) * 0.035);
         return {
           x: bounds.left + p.x,
           y: bounds.top + p.y,
-          bx: origin.x + Math.cos(theta) * distance * 1.7,
+          bx: origin.x + Math.cos(theta) * distance,
           by: origin.y + Math.sin(theta) * distance,
           size: 0.7 + (i % 4) * 0.35,
           seed: i,
         };
       });
-    document.querySelector("#flight-destination").textContent =
-      `THE ${destination.toUpperCase()}`;
-    document.querySelector("#flight-phase").textContent =
-      "RELEASING THE SIGNAL";
     document.querySelector("#flight-status").textContent =
       `Opening ${destination}.`;
     overlay.hidden = false;
@@ -332,106 +334,68 @@
   }
   function drawFlight(now) {
     if (!flight) return;
-    const f = flight,
-      t = (now - f.started) / 1000;
-    if (t >= 1.85) {
+    const f = flight, t = (now - f.started) / 1000;
+    if (t >= 1.55) {
       finishFlight(true);
       return;
     }
-    if (t > 0.86 && !f.navigated) {
+    if (t > 1.12 && !f.navigated) {
       navigate();
       f.navigated = true;
-      document.querySelector("#flight-phase").textContent = "FOLLOW THE SIGNAL";
     }
     flightCtx.clearRect(0, 0, f.w, f.h);
-    // No full-screen flash: a dark scrim bridges the jump between sections.
-    const shade =
-      t < 0.28
-        ? mix(0, 0.8, t / 0.28)
-        : t < 1.05
-          ? 0.8
-          : 0.8 * (1 - ease((t - 1.05) / 0.7));
+    // A dim bridge hides the section jump; no bright flash or text over the art.
+    const shade = t < 0.22 ? mix(0, 0.76, t / 0.22)
+      : 0.76 * (1 - ease((t - 1.12) / 0.43));
     flightCtx.fillStyle = `rgba(12,16,9,${shade})`;
     flightCtx.fillRect(0, 0, f.w, f.h);
-    let target = { x: f.w * 0.22, y: 200 };
-    if (f.navigated) {
-      const r = document
-        .querySelector(`#${destination} h2`)
-        .getBoundingClientRect();
-      target = {
-        x: r.left + Math.min(r.width * 0.4, 170),
-        y: r.top + r.height * 0.5,
-      };
-    }
+    const travel = (value) => {
+      const q = clamp(value, 0, 1);
+      return q * 0.35 + q * q * 0.65;
+    };
     for (const p of f.sparks) {
-      const sx = mix(p.x, f.origin.x, 0.18),
-        sy = mix(p.y, f.origin.y, 0.18);
-      let x,
-        y,
-        alpha = 1;
-      if (t < 0.25) {
-        const q = ease(t / 0.25);
+      const sx = mix(p.x, f.origin.x, 0.12), sy = mix(p.y, f.origin.y, 0.12);
+      let x, y, alpha = 1;
+      if (t < 0.18) {
+        const q = ease(t / 0.18);
         x = mix(p.x, sx, q);
         y = mix(p.y, sy, q);
-      } else if (t < 0.88) {
-        const q = ease((t - 0.25) / 0.63);
+      } else {
+        const q = travel((t - 0.18) / 0.94);
         x = mix(sx, p.bx, q);
         y = mix(sy, p.by, q);
-      } else {
-        const q = ease((t - 0.88) / 0.91),
-          theta = p.seed * 2.399963;
-        const orbit = 14 + (p.seed % 37) * 1.8;
-        x = mix(p.bx, target.x + Math.cos(theta) * orbit, q);
-        y = mix(p.by, target.y + Math.sin(theta) * orbit * 0.5, q);
-        alpha = 1 - ease((t - 1.38) / 0.42);
-        if (q < 0.97) {
-          flightCtx.strokeStyle = `rgba(216,239,150,${alpha * 0.23})`;
-          flightCtx.lineWidth = 0.75;
-          flightCtx.beginPath();
-          flightCtx.moveTo(x, y);
-          flightCtx.lineTo(x + (p.bx - x) * 0.045, y + (p.by - y) * 0.045);
-          flightCtx.stroke();
-        }
+        alpha = 1 - ease((t - 1.02) / 0.15);
+        const tail = travel((t - 0.22) / 0.94);
+        flightCtx.strokeStyle = `rgba(226,243,158,${alpha * 0.48})`;
+        flightCtx.lineWidth = p.size * 0.7;
+        flightCtx.beginPath();
+        flightCtx.moveTo(mix(sx, p.bx, tail), mix(sy, p.by, tail));
+        flightCtx.lineTo(x, y);
+        flightCtx.stroke();
       }
-      flightCtx.fillStyle = `rgba(225,246,161,${alpha})`;
+      flightCtx.fillStyle = `rgba(237,248,178,${alpha})`;
       flightCtx.beginPath();
       flightCtx.arc(x, y, p.size, 0, TAU);
       flightCtx.fill();
     }
-    if (t > 0.25 && t < 0.95) {
-      const q = (t - 0.25) / 0.7;
-      flightCtx.strokeStyle = `rgba(222,244,159,${(1 - q) * 0.55})`;
+    if (t > 0.18 && t < 1.12) {
+      const q = (t - 0.18) / 0.94;
+      flightCtx.strokeStyle = `rgba(222,244,159,${(1 - q) * 0.32})`;
       flightCtx.lineWidth = 1;
       flightCtx.beginPath();
-      flightCtx.arc(
-        f.origin.x,
-        f.origin.y,
-        25 + ease(q) * Math.max(f.w, f.h) * 0.6,
-        0,
-        TAU,
-      );
+      flightCtx.arc(f.origin.x, f.origin.y, 12 + travel(q) * Math.hypot(f.w, f.h), 0, TAU);
       flightCtx.stroke();
     }
-    overlay.style.setProperty(
-      "--caption-opacity",
-      String(t < 1.35 ? 1 : 1 - ease((t - 1.35) / 0.4)),
-    );
     f.frame = requestAnimationFrame(drawFlight);
   }
-  launch.addEventListener("click", startFlight);
+  launchButtons.forEach((button) => button.addEventListener("click", startFlight));
   document.querySelectorAll("[data-destination]").forEach((button) =>
     button.addEventListener("click", () => {
       if (flight) return;
       destination = button.dataset.destination;
-      document
-        .querySelectorAll("[data-destination]")
-        .forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
-      document.querySelector("#launch-label").textContent =
-        `CLICK TO ENTER MY ${destination.toUpperCase()}`;
-      launch.setAttribute(
-        "aria-label",
-        `Burst the sculpture and explore my ${destination}`,
-      );
+      document.querySelectorAll("[data-destination]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+      document.querySelector("#launch-label").textContent = `ENTER ${destinations[destination]}`;
+      launchButtons.forEach((b) => b.setAttribute("aria-label", `Burst the sculpture and explore ${destinations[destination].toLowerCase()}`));
     }),
   );
   document.addEventListener("keydown", (event) => {
