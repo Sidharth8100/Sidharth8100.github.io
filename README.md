@@ -14,13 +14,15 @@ Open http://127.0.0.1:4173. A web server is recommended for clipboard access and
 
 ## GitHub Pages
 
-The repository root is the deployable site. `index.html`, `styles.css`, `script.js`, `.nojekyll`, and `assets/` are all that serving the page requires. Keep GitHub Pages configured to deploy from the root of the publishing branch (normally `main`). No SPA rewrite is needed: sections use ordinary hash anchors. Old `#/work`, `#/about`, and `#/skills` links are mapped to the corresponding new sections.
+The repository root is the deployable site. `index.html`, `styles.css`, `script.js`, `observatory.js`, `.nojekyll`, and `assets/` are all that serving the page requires. Keep GitHub Pages configured to deploy from the root of the publishing branch (normally `main`). No SPA rewrite is needed: sections use ordinary hash anchors. Old `#/work`, `#/about`, and `#/skills` links are mapped to the corresponding new sections.
 
 This redesign is committed locally on `redesign/engineering-observatory`. Nothing has been pushed or deployed. Review the branch and merge into your publishing branch when ready.
 
 ## Interactions
 
-- Canvas systems sculpture with pointer response, pause control, reduced-motion support, and offscreen/background suspension.
+- Spring-driven systems sculpture: local dot repulsion, smoothed pointer tilt, and a three-phase particle burst that carries visitors to Journey, Work, Arena, or About. Click/tap or focus it and press Enter.
+- Escape skips the flight to its destination. Pause and reduced-motion preferences use immediate navigation. Offscreen/background rendering stops automatically.
+- Responsive project artwork with bounded tilt, pointer-following light, and direct case-study activation. Filters, disclosures, pathfinding, and architecture tracing give short visual feedback.
 - WARDEN architecture inspector and illustrative event trace.
 - Project category filters and detailed, keyboard-accessible native dialogs.
 - Breadth-first-search playground: toggle walls, find a shortest path, reset even during playback. Arrow keys move between cells.
@@ -34,7 +36,8 @@ Core profile, experience, achievements, contact details and resume remain availa
 
 - `index.html`: semantic page content and metadata
 - `styles.css`: responsive visual design, print rules, reduced-motion styles
-- `script.js`: project data, original SVG illustrations, interaction logic
+- `script.js`: project data, original SVG illustrations, core interaction logic
+- `observatory.js`: particle physics, navigation transition lifecycle, reactive surfaces
 - `assets/`: resume, avatar, favicon, share image
 - `docs/CONTENT_SOURCES.md`: provenance, benchmark scope, conflict resolution
 - `docs/VERIFICATION.md`: validation results and known limits
@@ -50,6 +53,7 @@ The website itself needs no Node packages. To run the retained browser tests, in
 npm install --no-save --package-lock=false playwright@1.57.0 axe-core@4.10.3
 node tests/browser.cjs
 node tests/accessibility.cjs
+node tests/interactions.cjs
 ```
 
 Start the preview server first. Tests use installed Google Chrome at `/usr/bin/google-chrome`; set `CHROME_PATH` for a different installation. `PORTFOLIO_PLAYWRIGHT` and `PORTFOLIO_AXE` can point to existing package installations instead of installing anything here. Screenshots and reports go into ignored `test-results/`.

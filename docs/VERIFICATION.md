@@ -27,3 +27,16 @@ These checks used local headless Google Chrome. They do not constitute manual sc
 External profile URLs are drawn from the supplied resume, existing site, and public GitHub sources; third-party pages were not exhaustively availability-tested. LeetCode/CodeChef achievements are dated resume snapshots, not live API statistics. The LeetCode profile URL comes from the public GitHub README, and no CodeChef handle was guessed.
 
 No deployment or remote mutation was performed. GitHub Pages compatibility is structural and locally tested: the repository root is a static site, with relative assets, no server APIs, no build step, no external fonts, and no rewrite requirement. Pushing/deployment remains with the owner.
+
+## Reactive interaction upgrade
+
+- Replaced direct pointer-to-rotation mapping with smoothed rotation and per-particle damped springs. Mesh connections use the same displaced points as the dots.
+- Added explicit, keyboard-operable sculpture launch with four destinations. The full-screen particle overlay follows a finite 1.85-second lifecycle: compress, scatter, converge.
+- Default destination is Journey. Every destination receives a hash entry, focus on its heading, and a screen-reader status update.
+- Tested mouse, Enter, and mobile touch launch; repeated activation creates only one navigation entry.
+- Tested Escape skip, paused immediate navigation, reduced-motion immediate navigation, and viewport resize recovery. The overlay never captures pointer input. Wheel/touch movement and background visibility changes also have explicit cleanup paths.
+- Tested clickable project artwork and hover engagement; surface animation frames stop once the tilt settles.
+- Existing regression suite still passes all filters, dialogs, BFS cases, seven responsive widths, legacy routes, and no-JavaScript fallback.
+- Updated axe scans pass for desktop, mobile, project dialog, and command dialog.
+- Visually reviewed the hovered sculpture, full-screen burst, destination arrival, and mobile controls. No full-screen bright flash, audio, or new runtime dependency was added.
+- Reused the already-running local preview server; no user-owned server was stopped or replaced.

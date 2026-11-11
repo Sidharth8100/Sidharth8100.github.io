@@ -64,6 +64,9 @@ fs.mkdirSync("test-results", { recursive: true });
     "http://127.0.0.1:4173/assets/social-preview.png",
   );
   assert.equal(social.status(), 200);
+  await p.setViewportSize({ width: 1440, height: 1000 });
+  await p.emulateMedia({ reducedMotion: "reduce" });
+  await audit("desktop");
   console.log(JSON.stringify(reports, null, 2));
   fs.writeFileSync(
     "test-results/accessibility.json",

@@ -58,7 +58,7 @@ fs.mkdirSync(out, { recursive: true });
     "bank",
     "jarvis",
   ]) {
-    await page.locator(`[data-project="${id}"]`).click();
+    await page.locator(`[data-project="${id}"]`).first().click();
     assert.equal(
       await page.locator("#project-dialog").evaluate((e) => e.open),
       true,

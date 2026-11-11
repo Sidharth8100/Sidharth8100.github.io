@@ -24,6 +24,7 @@
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
+    <script src="observatory.js" defer></script>
     <title>Sidharth Bhagat — Ideas into systems.</title>
   </head>
   <body>
@@ -102,17 +103,39 @@
               <span class="status-dot"></span> THE SYSTEMS OBSERVATORY
               <span class="scene-no">FIG. 001</span>
             </div>
-            <canvas
-              id="system-canvas"
-              aria-label="A rotating wireframe torus representing connected systems"
-            ></canvas>
+            <canvas id="system-canvas" aria-hidden="true"></canvas>
+            <button
+              class="sculpture-trigger"
+              id="launch-journey"
+              aria-label="Burst the sculpture and explore my journey"
+            >
+              <span class="orbital-invitation"
+                ><span class="launch-glyph">↗</span
+                ><span id="launch-label">CLICK TO ENTER MY JOURNEY</span></span
+              >
+            </button>
             <div class="orbit-callout callout-a"><span>01</span> LOGIC</div>
             <div class="orbit-callout callout-b">
               <span>02</span> INTELLIGENCE
             </div>
             <div class="orbit-callout callout-c"><span>03</span> IMPACT</div>
+            <div
+              class="orbital-destinations"
+              role="group"
+              aria-label="Choose sculpture destination"
+            >
+              <button data-destination="journey" aria-pressed="true">
+                01 Journey</button
+              ><button data-destination="work" aria-pressed="false">
+                02 Work</button
+              ><button data-destination="arena" aria-pressed="false">
+                03 Arena</button
+              ><button data-destination="about" aria-pressed="false">
+                04 About
+              </button>
+            </div>
             <div class="scene-bottom">
-              <span>MOVE TO EXPLORE</span
+              <span id="orbit-hint">MOVE TO BEND · CLICK TO BREAK FREE</span
               ><button id="motion-toggle" aria-pressed="false">
                 Pause motion Ⅱ
               </button>
@@ -625,6 +648,15 @@
         </div>
       </section>
     </main>
+    <div id="flight-overlay" aria-hidden="true" hidden>
+      <canvas id="flight-canvas"></canvas>
+      <div class="flight-caption">
+        <span id="flight-phase">RELEASING THE SIGNAL</span
+        ><strong id="flight-destination">THE JOURNEY</strong
+        ><small>ESC TO SKIP</small>
+      </div>
+    </div>
+    <p id="flight-status" class="sr-only" role="status"></p>
     <footer class="section-shell">
       <span>© <span id="year">2026</span> SIDHARTH BHAGAT</span
       ><span>BUILT WITH CURIOSITY. ALWAYS A WORK IN PROGRESS.</span
