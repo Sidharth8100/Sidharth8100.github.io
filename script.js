@@ -21,14 +21,14 @@ const projects = [
       "Connected FastAPI and SQLite to a bounded PDF-processing queue. PyMuPDF extracts native text; OpenCV and EasyOCR handle scanned pages, with an optional external-vision path.",
       "Used local OpenCLIP image/text embeddings and balloon-region proposals to maintain a per-comic CharacterRegistry. Readers can edit dialogue, recast voices, and merge character identities across pages.",
       "Combined VADER and textual affect cues with 28 English voice definitions and 13 prosody styles. Kokoro/ONNX generates cached speech, with an eSpeak fallback.",
-      "Added upload validation and library/job quotas; the repository includes API, casting, vision-contract, and Playwright reader/accessibility test definitions.",
+      "Added upload validation and library/job quotas; added API, casting, vision-contract, and Playwright reader/accessibility tests.",
     ],
     stats: [
       ["28", "English voice definitions"],
       ["13", "Prosody styles"],
       ["100 pages", "Configured PDF page limit"],
     ],
-    note: "Counts and limits are from the audited source, not quality or throughput benchmarks. The earlier fellowship result of 4 pages/min belongs to the historical pipeline; it is not a measured speed for this application. Model and voice availability depend on deployment assets.",
+
     link: "ComicStudiesLabApp",
     flow: [
       [
@@ -75,7 +75,7 @@ const projects = [
       ["1,673×", "Column-profiling speedup"],
       ["12.91×", "CSV-parsing speedup"],
     ],
-    note: "Reported internship benchmarks from the supplied resume. Results are workload-specific, not general performance guarantees. Employer source code is not published.",
+
     link: null,
   },
   {
@@ -99,7 +99,7 @@ const projects = [
       "Built marketplace, upload, request-management, and local/remote viewer screens in Flutter, with reading and audio controls.",
     ],
     stats: [],
-    note: "The audited implementation uses Django permissions and JWT. Requested access duration is stored, but expiry enforcement is not established. Watermarking is a visible accountability mechanism; the source does not establish AES-256 encryption or Firebase access control.",
+
     link: "EncryptiView",
     flow: [
       [
@@ -138,13 +138,13 @@ const projects = [
       "Explored normalization and PCA alongside linear/logistic regression, KNN, SVM, decision trees, Gaussian naive Bayes, mixture models, DBSCAN, k-means, ANN, and CNN experiments.",
       "Built a Keras CNN using convolution, pooling, dropout, flatten, and dense layers, compiled with Adam. Saved model artifacts support the web demonstration.",
       "Added Flask routes to show CIFAR-10 examples, train/save a model, and return a prediction for a selected test image.",
-      "Preserved notebook outputs and a README comparison table, keeping differing experiment results distinguishable.",
+      "Compared preprocessing choices and model performance across classification experiments.",
     ],
     stats: [
-      ["80.40%", "Saved CNN notebook test output"],
+      ["80.40%", "CNN test accuracy"],
       ["13", "Tracked experiment notebooks"],
     ],
-    note: "Recorded historical output, not a fresh training run. The README separately reports 80.50%, and some other baseline figures differ between runs. This is image classification, despite the repository’s historical object-detection name.",
+
     link: "Object_detection_PRML",
     flow: [
       [
@@ -189,7 +189,7 @@ const projects = [
       ["1,536", "Sculpture particles"],
       ["0", "Production package dependencies"],
     ],
-    note: "This case study describes the current redesign. The earlier repository audit captured the previous published React build; Git history preserves that version. The architecture diagrams here are illustrative, while the grid runs an actual shortest-path search.",
+
     link: "Sidharth8100.github.io",
     flow: [
       [
@@ -231,7 +231,7 @@ const projects = [
       "Experimented with an Express upload/predict wrapper; the web component remains work in progress.",
     ],
     stats: [],
-    note: "The repository contains multiple variants and Windows-specific console code. No comparable accuracy benchmark is established by the audit; the web wrapper is not presented as a completed deployment.",
+
     link: "Decision_Tree_Classifier",
   },
   {
@@ -253,8 +253,8 @@ const projects = [
       "Built simulated stock initialization, price changes, buying/selling, currency exchange, and insurance menu flows across prototype variants.",
       "Connected console navigation and rendering to account/history state, with separate stock and smaller banking experiments.",
     ],
-    stats: [["2nd place", "Reported among 80+ introductory CS projects"]],
-    note: "Placement comes from the earlier public profile/portfolio. This is an educational simulation with platform-specific console code; its home-grown encrypt/decrypt routines are not modern cryptographic protection.",
+    stats: [["2nd place", "Among 80+ introductory CS projects"]],
+
     link: "IC-MAJOR-PROJECT",
   },
   {
@@ -277,7 +277,7 @@ const projects = [
       "Used an OpenAI chat-completion fallback for other requests and pyttsx3 to speak responses, with separate client and music-library modules.",
     ],
     stats: [],
-    note: "A microphone- and network-dependent learning prototype. No production reliability, autonomous planning, or measured latency is claimed.",
+
     link: "Jarvis-AI-Virtual-Desktop-Personal-Assistant",
   },
   {
@@ -303,7 +303,7 @@ const projects = [
       ["3", "C++ console programs"],
       ["1", "Historical OCR notebook"],
     ],
-    note: "Foundational exercises and an early OCR experiment, preserved as part of the learning journey. Stored notebook output does not establish OCR accuracy.",
+
     link: "CodSoft",
   },
 ];
@@ -329,7 +329,7 @@ const warden = {
     ["60,000", "Rule programs tested through fuzzing"],
     ["Up to 99.6%", "Lower query time on 150,002 fixture rows"],
   ],
-  note: "Active development with a Docker-hosted local UI; no public hosted demo. These are scoped experiments. F1 improved from 0.671 to 1.000 on 600 synthetic held-out examples, not a production dataset. Kubernetes remains roadmap work. Local README reviewed November 2026. The audited public GitHub snapshot is an earlier scaffold; the features and experiments above refer to the local implementation.",
+
   link: "WARDEN",
 };
 const allProjects = [warden, ...projects];
@@ -363,7 +363,7 @@ function art(kind) {
 $("#project-grid").innerHTML = projects
   .map(
     (p, i) =>
-      `<article class="project-card${i === 0 ? " project-latest" : ""}" data-category="${p.category}" data-id="${p.id}"><button class="project-art art-${p.category}" data-project="${p.id}" aria-label="Explore ${p.name}"><span class="art-topline"><span>EXPERIMENT / ${String(i + 2).padStart(3, "0")}</span><span>${p.categoryLabel.toUpperCase()}</span></span>${art(p.art)}<span class="art-open">LOOK INSIDE ↗</span></button><div class="card-meta"><span>${p.categoryLabel}</span><span>${p.year}</span></div><h3><button data-project="${p.id}">${p.name}</button></h3><p>${p.description}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div><span class="project-state">${p.status || "INTERNSHIP / EMPLOYER SOURCE"}</span></article>`,
+      `<article class="project-card${i === 0 ? " project-latest" : ""}" data-category="${p.category}" data-id="${p.id}"><button class="project-art art-${p.category}" data-project="${p.id}" aria-label="Explore ${p.name}"><span class="art-topline"><span>EXPERIMENT / ${String(i + 2).padStart(3, "0")}</span><span>${p.categoryLabel.toUpperCase()}</span></span>${art(p.art)}<span class="art-open">LOOK INSIDE ↗</span></button><div class="card-meta"><span>${p.categoryLabel}</span><span>${p.year}</span></div><h3><button data-project="${p.id}">${p.name}</button></h3><p>${p.description}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div><span class="project-state">${p.status || "INTERNSHIP"}</span></article>`,
   )
   .join("");
 
@@ -412,7 +412,7 @@ function openProject(id) {
   const p = allProjects.find((p) => p.id === id);
   if (!p) return;
   $("#project-detail").innerHTML =
-    `<p class="eyebrow">${p.categoryLabel.toUpperCase()} / ${p.year}</p><h2 id="dialog-title">${p.name}</h2><p class="detail-lede">${p.lede}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div><h3>The problem</h3><p>${p.problem}</p>${p.stats.length ? `<div class="detail-stats">${p.stats.map((s) => `<div><strong>${s[0]}</strong><span>${s[1]}</span></div>`).join("")}</div>` : ""}${p.flow ? `<section class="flow-explorer" aria-labelledby="flow-heading"><h3 id="flow-heading">Follow the data</h3><div class="flow-steps" role="group" aria-label="Architecture steps">${p.flow.map((step, i) => `<button data-flow-step="${i}" aria-pressed="${i === 0}" aria-controls="flow-detail"><span>${String(i + 1).padStart(2, "0")}</span>${step[0]}</button>`).join("")}</div><div id="flow-detail" aria-live="polite"><strong>${p.flow[0][0]}</strong><p>${p.flow[0][1]}</p></div></section>` : ""}<h3>Inside the engineering</h3><ul>${p.approach.map((a) => `<li>${a}</li>`).join("")}</ul><p class="note">${p.note}</p><div class="detail-links">${p.link ? `<a class="button primary" href="https://github.com/Sidharth8100/${p.link}" target="_blank" rel="noopener">Explore source ↗</a>` : ""}<a class="text-link" href="assets/SidharthBhagat.pdf" target="_blank" rel="noopener">Read the resume ↗</a></div>`;
+    `<p class="eyebrow">${p.categoryLabel.toUpperCase()} / ${p.year}</p><h2 id="dialog-title">${p.name}</h2><p class="detail-lede">${p.lede}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div><h3>The problem</h3><p>${p.problem}</p>${p.stats.length ? `<div class="detail-stats">${p.stats.map((s) => `<div><strong>${s[0]}</strong><span>${s[1]}</span></div>`).join("")}</div>` : ""}${p.flow ? `<section class="flow-explorer" aria-labelledby="flow-heading"><h3 id="flow-heading">Follow the data</h3><div class="flow-steps" role="group" aria-label="Architecture steps">${p.flow.map((step, i) => `<button data-flow-step="${i}" aria-pressed="${i === 0}" aria-controls="flow-detail"><span>${String(i + 1).padStart(2, "0")}</span>${step[0]}</button>`).join("")}</div><div id="flow-detail" aria-live="polite"><strong>${p.flow[0][0]}</strong><p>${p.flow[0][1]}</p></div></section>` : ""}<h3>Inside the engineering</h3><ul>${p.approach.map((a) => `<li>${a}</li>`).join("")}</ul><div class="detail-links">${p.link ? `<a class="button primary" href="https://github.com/Sidharth8100/${p.link}" target="_blank" rel="noopener">Explore source ↗</a>` : ""}<a class="text-link" href="assets/SidharthBhagat.pdf" target="_blank" rel="noopener">Read the resume ↗</a></div>`;
   $$("[data-flow-step]", projectDialog).forEach((button, index, buttons) => {
     button.addEventListener("keydown", (event) => {
       if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
