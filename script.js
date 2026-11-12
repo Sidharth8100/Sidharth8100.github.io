@@ -21,7 +21,7 @@ const projects = [
       "Connected FastAPI and SQLite to a bounded PDF-processing queue. PyMuPDF extracts native text; OpenCV and EasyOCR handle scanned pages, with an optional external-vision path.",
       "Used local OpenCLIP image/text embeddings and balloon-region proposals to maintain a per-comic CharacterRegistry. Readers can edit dialogue, recast voices, and merge character identities across pages.",
       "Combined VADER and textual affect cues with 28 English voice definitions and 13 prosody styles. Kokoro/ONNX generates cached speech, with an eSpeak fallback.",
-      "Added upload validation and library/job quotas; added API, casting, vision-contract, and Playwright reader/accessibility tests.",
+      "Implemented upload validation and library/job quotas, with API, casting, vision-contract, and Playwright reader/accessibility tests.",
     ],
     stats: [
       ["28", "English voice definitions"],

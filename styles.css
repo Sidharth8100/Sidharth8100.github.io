@@ -2599,10 +2599,6 @@ body[data-motion="paused"] dialog[open] {
   gap: 16px;
   margin-top: 52px;
 }
-.collection-heading > p:last-child {
-  color: #a4ad98;
-  font-size: 12px;
-}
 .collection-heading + .project-toolbar {
   margin-top: 22px;
 }
@@ -2720,9 +2716,6 @@ body[data-motion="paused"] dialog[open] {
 @media (max-width: 760px) {
   .collection-heading {
     display: block;
-  }
-  .collection-heading > p:last-child {
-    margin-top: 12px;
   }
   .project-search {
     display: block;
