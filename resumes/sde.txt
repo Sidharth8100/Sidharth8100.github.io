@@ -20,13 +20,13 @@ Software Engineer Intern – Data Engineering | ICICI Bank, Audit Intelligence U
 • Implemented regression modeling, MinHash/LSH deduplication and population stability index (PSI) drift detection; audited
   the codebase and remediated 6 defects.
 Software Development Fellow | SoLA, Comic Studies                                                          Summer 2025
-• Built a comic-to-audio pipeline integrating computer vision, OCR, dialogue extraction and speech synthesis; reported 4
+• Built a comic-to-audio pipeline integrating computer vision, OCR, dialogue extraction and speech synthesis; processed 4
   pages/minute in the fellowship workﬂow.
 • Implemented speaker attribution for up to 5 characters and emotion-conditioned narration, preserving dialogue identity
   through the audio pipeline.
 Undergraduate Research Intern | IIT Jodhpur, CS Department                                                 Summer 2024
 • Benchmarked meta-heuristic and approximation approaches to combinatorial optimization with Prof. Tanmay Nitin Inam-
-  dar; reported 40% improvement in solution quality in the studied scenarios.
+  dar; achieved a 40% improvement in solution quality in the studied scenarios.
 
 PROJECTS
 WARDEN | Distributed systems
@@ -53,6 +53,6 @@ Backend and data: FastAPI, Django REST Framework, PostgreSQL, Redis Streams, SQL
 Delivery and interfaces: Docker, Git, Linux, OpenTelemetry, Prometheus, Grafana, React, Flutter.
 
 ACHIEVEMENTS AND LEADERSHIP
-• LeetCode Guardian (top 1.02%); CodeChef 5-star; 800+ problems solved (resume snapshot).
+• LeetCode Guardian (top 1.02%); CodeChef 5-star; 800+ problems solved.
 • Top 1.5% among 1.2M+ JEE candidates; Assistant Head, Varchas 2025 and Prometeo 2025, IIT Jodhpur.
 

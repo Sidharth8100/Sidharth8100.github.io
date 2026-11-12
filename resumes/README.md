@@ -32,6 +32,6 @@ Official role descriptions were used as vocabulary references, not as evidence o
 
 ## Completed local experiments
 
-Compared the initial 9pt/11pt text setting with 9pt/12.2pt leading. Both compiled to one page; the selected setting moved the final text from 716.4pt to 762.5pt down the A4 page, improving page use and line separation without adding filler. All four selected documents end at the same vertical position.
+Compared the initial 9pt/11pt text setting with 9pt/12.2pt leading. Both compiled to one page; the selected setting moved the final text from 716.4pt to 762.5pt down the A4 page, improving page use and line separation without adding filler. The final documents retain matching page geometry.
 
-`validation.json` records one A4 page per PDF, 477–491 extracted words, roughly 14 KB file sizes, and no missing required identity/education/employment/section strings. `.txt` files show the extracted reading order. All four final pages were rendered and visually inspected. No clipping or overlapping text was observed. These tests are reproducible with `python3 resumes/validate.py`; they do not reproduce an employer's private ranking model.
+`validation.json` records current page dimensions, extracted word counts, file sizes, and required identity/education/employment/section checks. `.txt` files show the extracted reading order. All four final pages were rendered and visually inspected. No clipping or overlapping text was observed. These tests are reproducible with `python3 resumes/validate.py`; they do not reproduce an employer's private ranking model.

@@ -5,9 +5,9 @@
     "width_pt": 595.28,
     "height_pt": 841.89,
     "last_text_baseline_pt": 762.50573,
-    "bytes": 14092,
+    "bytes": 14049,
     "missing_fields": [],
-    "extracted_words": 477
+    "extracted_words": 471
   },
   {
     "file": "data.pdf",
@@ -15,9 +15,9 @@
     "width_pt": 595.28,
     "height_pt": 841.89,
     "last_text_baseline_pt": 762.50573,
-    "bytes": 14311,
+    "bytes": 14271,
     "missing_fields": [],
-    "extracted_words": 486
+    "extracted_words": 480
   },
   {
     "file": "general.pdf",
@@ -25,9 +25,9 @@
     "width_pt": 595.28,
     "height_pt": 841.89,
     "last_text_baseline_pt": 762.50573,
-    "bytes": 14539,
+    "bytes": 14499,
     "missing_fields": [],
-    "extracted_words": 491
+    "extracted_words": 485
   },
   {
     "file": "sde.pdf",
@@ -35,8 +35,8 @@
     "width_pt": 595.28,
     "height_pt": 841.89,
     "last_text_baseline_pt": 762.50573,
-    "bytes": 14204,
+    "bytes": 14197,
     "missing_fields": [],
-    "extracted_words": 491
+    "extracted_words": 490
   }
 ]
