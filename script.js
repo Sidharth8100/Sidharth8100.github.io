@@ -133,7 +133,7 @@ const projects = [
       "CIFAR-10 classification experiments spanning classical models, clustering, and a convolutional network.",
     lede: "From notebook experiments to a Flask image-classification demonstration.",
     problem:
-      "Small images offer a useful test of learned features. Comparing approaches requires tracking preprocessing, model configuration, and the exact output being reported.",
+      "Classify low-resolution images into ten categories and compare classical models with a convolutional network.",
     approach: [
       "Explored normalization and PCA alongside linear/logistic regression, KNN, SVM, decision trees, Gaussian naive Bayes, mixture models, DBSCAN, k-means, ANN, and CNN experiments.",
       "Built a Keras CNN using convolution, pooling, dropout, flatten, and dense layers, compiled with Adam. Saved model artifacts support the web demonstration.",
@@ -142,7 +142,7 @@ const projects = [
     ],
     stats: [
       ["80.40%", "CNN test accuracy"],
-      ["13", "Tracked experiment notebooks"],
+      ["13", "Experiment notebooks"],
     ],
 
     link: "Object_detection_PRML",
@@ -153,11 +153,11 @@ const projects = [
       ],
       [
         "Compare approaches",
-        "Classical supervised models, clustering approaches, and neural models are explored in separate notebooks; their settings matter when comparing outputs.",
+        "Compare classical classifiers, clustering approaches, and neural models across separate experiments.",
       ],
       [
         "Train the CNN",
-        "Keras combines convolution, pooling, dropout, and dense prediction layers. A saved notebook explicitly records 80.40% test accuracy.",
+        "Keras combines convolution, pooling, dropout, and dense prediction layers. The CNN achieved 80.40% test accuracy.",
       ],
       [
         "Make a prediction",
@@ -301,7 +301,7 @@ const projects = [
     ],
     stats: [
       ["3", "C++ console programs"],
-      ["1", "Historical OCR notebook"],
+      ["1", "OCR notebook"],
     ],
 
     link: "CodSoft",
